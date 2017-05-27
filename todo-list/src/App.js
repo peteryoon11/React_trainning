@@ -1,44 +1,111 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import shortid from 'shortid';
+import shortId from 'shortid';
+import TodoInsert from './components/TodoInsert';
+import TodoItemList from './components/TodoItemList';
+import TodoReset from './components/TodoReset';
 
-function createItem()
+function createItem(name)
 {
-  return {};
+  return {
+    id:shortId.generate(),
+    name,
+    finished:false
+  }
 }
 
 const defaultTodos =[
-'test','test1','test2'
-
+  '리액트 시작하기',
+  '컴포넌트 이해하기',
+  'props/state 사용하기',
+  'LifeCycle API'
 ].map(createItem);
 
 
-handleToggle =(id)=>{
-  const{todoItems}= this.state;
-  const index = todoItems.findIndex();
 
-};
+
 
 
 class App extends Component {
 
-handleInsert= ()=>{
+  state ={
+    todoItems:defaultTodos
+  }
+constructor(props)
+{
+  super(props);
+  const todos = localStorage.getItem('todos');
+  if(todos)
+  {
+    this.state ={
+      todoItems:JSON.parse(todos)
+    };
+  }
+}
+componentDidUpdate(prevProps, prevState) {
+  localStorage.setItem('todos',JSON.stringify(this.state.todoItems));
+}
+handleInsert = (name)=>
+{
+  this.setState({
+    todoItems:[...this.state.todoItems,
+    createItem(name)]
+  })
+}
+
+handleToggle = (id)=>{
+
+  const {todoItems} =this.state;
+  const index = todoItems.findIndex(item=>item.id === id);
+  const item = todoItems[index];
+  this.setState({
+
+    todoItems:[
+      ...todoItems.slice(0,index),
+      {
+        ...item
+        ,finished : !item.finished
+
+      },
+      ...todoItems.slice(index+1,todoItems.length)
+    ]
+  });
+}
+
+handleRemove = (id)=>{
+  const {todoItems} = this.state;
+  const index = todoItems.findIndex(item => item
+  .id ===id);
+  this.setState({
+todoItems:[
+  ...todoItems.slice(0,index),
+  ...todoItems.slice(index+1,todoItems.length)
+]
+
+  });
 
 
-};
+}
+
+handleReset = ()=>{
+  this.setState ({
+    todoItems:defaultTodos
+  });
+}
 
 
   render() {
+    const {handleInsert,
+    handleRemove,
+  handleToggle,handleReset}= this;
+  const {todoItems} = this.state;
+
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>TODO LIST</h1>
+        <TodoReset onReset={handleReset}/>
+        <TodoInsert onInsert={handleInsert}/>
+        <TodoItemList items={todoItems} onToggle={handleToggle}
+        onRemove={handleRemove}/>
       </div>
     );
   }
