@@ -20,7 +20,8 @@ const Container = ({visible,children}) =>visible ? (
         {children}
     </Wrapper>
 ) : null;
-Container.propTypes={
+
+Container.PropTypes={
     visible : PropTypes.bool
 };
 

@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import oc from 'open-color';
+import StarIcon from 'react-icons/lib/md/star';
+
+
 
 const Wrapper = styled.div`
     height: 4rem;
@@ -18,7 +21,7 @@ const StyledItem =styled.div`
  flex:1;
  display:flex;
  align-items:center;
- justfy-content:center;
+ justify-content:center;
  color:${oc.gray[6]};
 
  font-size:1.5rem;
@@ -28,6 +31,9 @@ const StyledItem =styled.div`
      background:${oc.gray[0]};
  }
 `;
+
+
+
 const Bar = styled.div`
     position: absolute;
     bottom: 0px;
@@ -47,10 +53,16 @@ const Item=({children})=>{
 
 const ViewSelector = () => (
     <Wrapper>
-    <Item>즐겨찾기</Item>
+    <Item><StarIcon/></Item>
+
     <Item>리스트</Item>
     <Bar/>
     </Wrapper>
 );
+
+ViewSelector.propTypes ={
+
+};
+
 
 export default ViewSelector;
