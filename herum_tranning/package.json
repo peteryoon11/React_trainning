@@ -1,0 +1,22 @@
+{
+  "name": "herum_tranning",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "cross-env": "^5.0.1",
+    "dotenv": "^4.0.0",
+    "jsonwebtoken": "^7.4.1",
+    "koa": "^2.3.0",
+    "koa-router": "^7.2.1",
+    "mongoose": "^4.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.1.1",
+    "eslint-config-google": "^0.8.0"
+  },
+  "scripts": {
+    "start": "node src",
+    "start:dev": "nodemon --watch src/ src/index.js"
+  }
+}

@@ -36,7 +36,7 @@ class App extends Component {
                 { visible && <ColorBlock color={color}/>}
             </div>
         );
-    }
+       }
 }
 
 export default App;
